@@ -1,0 +1,5 @@
+.message-container {
+  border-radius: 7px;
+  background-color: var(--light-grey);
+  padding: 5px;
+}
