@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { fetch, selectMessages, selectStatus } from "./messagesSlice";
+import { fetch, selectMessages, selectStatus, send } from "./messagesSlice";
 import MessagesView from "./Messages.View";
 
 export default function MessagesContainer() {
@@ -11,7 +11,13 @@ export default function MessagesContainer() {
 
   useEffect(() => {
     dispatch(fetch());
-  }, [fetch]);
+  }, [dispatch]);
 
-  return <MessagesView messages={messages} status={status} />;
+  return (
+    <MessagesView
+      messages={messages}
+      status={status}
+      send={(text, path) => dispatch(send({ text, path }))}
+    />
+  );
 }

@@ -6,17 +6,22 @@ import "./MessageList.css";
 
 type Props = {
   messages: Message[];
-  depth?: number;
+  path: string[];
+  send: (text: string, path: string[]) => void;
 };
 
-export default function MessageList({ messages, depth }: Props) {
+export default function MessageList({ messages, path, send }: Props) {
   return (
-    <ul className={`message-list ${!depth ? "message-list-first" : ""}`}>
+    <ul className={`message-list ${!path.length ? "message-list-first" : ""}`}>
       {messages.map((message) => (
         <li key={message.id} className="message-list-element">
-          <MessageBox message={message} />
+          <MessageBox message={message} send={send} path={path} />
           {message.messages ? (
-            <MessageList messages={message.messages} depth={depth || 0 + 1} />
+            <MessageList
+              messages={message.messages}
+              send={send}
+              path={[...path, message.id]}
+            />
           ) : null}
         </li>
       ))}
